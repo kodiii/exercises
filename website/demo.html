@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Demo - Muscle Exercises API</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .demo-page {
+            padding: 100px 0 50px;
+            min-height: 100vh;
+            background: #f8fafc;
+        }
+        
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .demo-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .demo-header h1 {
+            font-size: 2.5rem;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .demo-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .demo-card h3 {
+            color: #2563eb;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .exercise-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .exercise-card:last-child {
+            margin-bottom: 0;
+        }
+        
+        .exercise-name {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        
+        .exercise-details {
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+        
+        .exercise-details span {
+            display: inline-block;
+            background: #f3f4f6;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin: 2px;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+        
+        .back-link:hover {
+            color: #1d4ed8;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-page">
+        <div class="demo-container">
+            <a href="index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                Back to Main Site
+            </a>
+            
+            <div class="demo-header">
+                <h1>Live API Demo</h1>
+                <p>Real data from the Muscle Exercises API</p>
+            </div>
+            
+            <div class="demo-grid">
+                <div class="demo-card">
+                    <h3><i class="fas fa-dumbbell"></i> Sample Exercises</h3>
+                    <div id="sample-exercises">Loading...</div>
+                </div>
+                
+                <div class="demo-card">
+                    <h3><i class="fas fa-search"></i> Search Results</h3>
+                    <div id="search-results">Loading...</div>
+                </div>
+                
+                <div class="demo-card">
+                    <h3><i class="fas fa-list"></i> Muscle Groups</h3>
+                    <div id="muscle-groups">Loading...</div>
+                </div>
+                
+                <div class="demo-card">
+                    <h3><i class="fas fa-chart-bar"></i> API Statistics</h3>
+                    <div id="api-stats">Loading...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Auto-detect API URL
+        const getApiUrl = () => {
+            const currentHost = window.location.hostname;
+            const currentProtocol = window.location.protocol;
+            
+            if (currentHost === 'localhost' || currentHost === '127.0.0.1') {
+                return 'http://localhost:8000';
+            } else {
+                return `${currentProtocol}//${currentHost}:8000`;
+            }
+        };
+
+        const API_BASE = getApiUrl();
+
+        // Load sample exercises
+        async function loadSampleExercises() {
+            try {
+                const response = await fetch(`${API_BASE}/exercises?limit=3`);
+                const data = await response.json();
+                
+                const container = document.getElementById('sample-exercises');
+                container.innerHTML = data.exercises.map(exercise => `
+                    <div class="exercise-card">
+                        <div class="exercise-name">${exercise.name}</div>
+                        <div class="exercise-details">
+                            <strong>Target:</strong> ${exercise.targetMuscles.map(m => `<span>${m}</span>`).join('')}<br>
+                            <strong>Equipment:</strong> ${exercise.equipments.map(e => `<span>${e}</span>`).join('')}
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                document.getElementById('sample-exercises').innerHTML = 
+                    `<p style="color: #ef4444;">Error loading exercises: ${error.message}</p>`;
+            }
+        }
+
+        // Load search results
+        async function loadSearchResults() {
+            try {
+                const response = await fetch(`${API_BASE}/exercises/search/curl`);
+                const data = await response.json();
+                
+                const container = document.getElementById('search-results');
+                container.innerHTML = data.slice(0, 3).map(exercise => `
+                    <div class="exercise-card">
+                        <div class="exercise-name">${exercise.name}</div>
+                        <div class="exercise-details">
+                            <strong>Body Part:</strong> ${exercise.bodyParts.map(b => `<span>${b}</span>`).join('')}
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                document.getElementById('search-results').innerHTML = 
+                    `<p style="color: #ef4444;">Error loading search results: ${error.message}</p>`;
+            }
+        }
+
+        // Load muscle groups
+        async function loadMuscleGroups() {
+            try {
+                const response = await fetch(`${API_BASE}/muscles`);
+                const data = await response.json();
+                
+                const container = document.getElementById('muscle-groups');
+                const muscles = data.slice(0, 10).map(muscle => `<span>${muscle.name}</span>`).join('');
+                container.innerHTML = `
+                    <div style="margin-bottom: 1rem;">${muscles}</div>
+                    <p style="color: #6b7280; font-size: 0.9rem;">Showing 10 of ${data.length} muscle groups</p>
+                `;
+            } catch (error) {
+                document.getElementById('muscle-groups').innerHTML = 
+                    `<p style="color: #ef4444;">Error loading muscle groups: ${error.message}</p>`;
+            }
+        }
+
+        // Load API statistics
+        async function loadApiStats() {
+            try {
+                const response = await fetch(`${API_BASE}/stats`);
+                const data = await response.json();
+                
+                const container = document.getElementById('api-stats');
+                container.innerHTML = `
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <strong style="color: #2563eb;">${data.total_exercises}</strong><br>
+                            <span style="font-size: 0.9rem; color: #6b7280;">Total Exercises</span>
+                        </div>
+                        <div>
+                            <strong style="color: #2563eb;">${data.total_muscles}</strong><br>
+                            <span style="font-size: 0.9rem; color: #6b7280;">Muscle Groups</span>
+                        </div>
+                        <div>
+                            <strong style="color: #2563eb;">${data.total_body_parts}</strong><br>
+                            <span style="font-size: 0.9rem; color: #6b7280;">Body Parts</span>
+                        </div>
+                        <div>
+                            <strong style="color: #2563eb;">${data.total_equipments}</strong><br>
+                            <span style="font-size: 0.9rem; color: #6b7280;">Equipment Types</span>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                document.getElementById('api-stats').innerHTML = 
+                    `<p style="color: #ef4444;">Error loading statistics: ${error.message}</p>`;
+            }
+        }
+
+        // Load all data when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSampleExercises();
+            loadSearchResults();
+            loadMuscleGroups();
+            loadApiStats();
+        });
+    </script>
+</body>
+</html>

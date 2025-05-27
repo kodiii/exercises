@@ -1,0 +1,24 @@
+[Unit]
+Description=Muscle Exercises API
+After=network.target
+
+[Service]
+Type=exec
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/muscle-exercises-api
+Environment=PATH=/opt/muscle-exercises-api/venv/bin
+ExecStart=/opt/muscle-exercises-api/venv/bin/gunicorn -c gunicorn.conf.py main:app
+ExecReload=/bin/kill -s HUP $MAINPID
+Restart=always
+RestartSec=5
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/log/muscle-exercises-api
+
+[Install]
+WantedBy=multi-user.target

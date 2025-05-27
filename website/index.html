@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muscle Exercises API - Complete Workout Database</title>
+    <meta name="description" content="Comprehensive REST API for muscle exercises with 500+ workouts, detailed instructions, and equipment information.">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-dumbbell"></i>
+                <span>Muscle Exercises API</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#endpoints">Endpoints</a></li>
+                <li><a href="#examples">Examples</a></li>
+                <li><a href="#playground">Try It</a></li>
+                <li><a href="#docs" class="btn-docs">API Docs</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Muscle Exercises API</h1>
+                <p class="hero-subtitle">Complete workout database with 500+ exercises, detailed instructions, and equipment information</p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">Exercises</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">151</span>
+                        <span class="stat-label">Muscles</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">83</span>
+                        <span class="stat-label">Equipment</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">10</span>
+                        <span class="stat-label">Body Parts</span>
+                    </div>
+                </div>
+                <div class="hero-buttons">
+                    <a href="#playground" class="btn btn-primary">Try API Now</a>
+                    <a href="demo.html" class="btn btn-secondary">Live Demo</a>
+                </div>
+            </div>
+            <div class="hero-demo">
+                <div class="demo-window">
+                    <div class="demo-header">
+                        <div class="demo-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <span class="demo-title">GET /exercises/by-muscle/biceps</span>
+                    </div>
+                    <div class="demo-content">
+                        <pre><code class="language-json">{
+  "exerciseId": "3XFdb1Z",
+  "name": "cable squatting curl",
+  "gifUrl": "3XFdb1Z.gif",
+  "targetMuscles": ["biceps"],
+  "bodyParts": ["upper arms"],
+  "equipments": ["cable"],
+  "secondaryMuscles": ["forearms"],
+  "instructions": [
+    "Step:1 Attach a cable handle...",
+    "Step:2 Stand facing the machine...",
+    "..."
+  ]
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section id="overview" class="overview">
+        <div class="container">
+            <h2>Why Choose Our API?</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3>Comprehensive Database</h3>
+                    <p>500+ exercises with detailed instructions, target muscles, equipment requirements, and visual demonstrations.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>Advanced Filtering</h3>
+                    <p>Search by name, filter by muscle groups, body parts, or equipment. Pagination support for large datasets.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Fast & Reliable</h3>
+                    <p>Built with FastAPI for high performance. Auto-generated documentation and type safety included.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Developer Friendly</h3>
+                    <p>RESTful design, JSON responses, CORS enabled. Perfect for web apps, mobile apps, and fitness platforms.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Endpoints Section -->
+    <section id="endpoints" class="endpoints">
+        <div class="container">
+            <h2>API Endpoints</h2>
+            <div class="endpoints-grid">
+                <div class="endpoint-category">
+                    <h3><i class="fas fa-dumbbell"></i> Exercises</h3>
+                    <div class="endpoint-list">
+                        <div class="endpoint">
+                            <span class="method get">GET</span>
+                            <span class="path">/exercises</span>
+                            <span class="description">Get all exercises with filtering</span>
+                        </div>
+                        <div class="endpoint">
+                            <span class="method get">GET</span>
+                            <span class="path">/exercises/{id}</span>
+                            <span class="description">Get specific exercise by ID</span>
+                        </div>
+                        <div class="endpoint">
+                            <span class="method get">GET</span>
+                            <span class="path">/exercises/search/{query}</span>
+                            <span class="description">Search exercises by name</span>
+                        </div>
+                        <div class="endpoint">
+                            <span class="method get">GET</span>
+                            <span class="path">/exercises/random</span>
+                            <span class="description">Get random exercises</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="endpoint-category">
+                    <h3><i class="fas fa-filter"></i> Filtering</h3>
+                    <div class="endpoint-list">
+                        <div class="endpoint">
+                            <span class="method get">GET</span>
+                            <span class="path">/exercises/by-muscle/{muscle}</span>
+                            <span class="description">Filter by target muscle</span>
+                        </div>
+                        <div class="endpoint">
+                            <span class="method get">GET</span>
+                            <span class="path">/exercises/by-bodypart/{part}</span>
+                            <span class="description">Filter by body part</span>
+                        </div>
+                        <div class="endpoint">
+                            <span class="method get">GET</span>
+                            <span class="path">/exercises/by-equipment/{equipment}</span>
+                            <span class="description">Filter by equipment</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="endpoint-category">
+                    <h3><i class="fas fa-list"></i> Reference Data</h3>
+                    <div class="endpoint-list">
+                        <div class="endpoint">
+                            <span class="method get">GET</span>
+                            <span class="path">/muscles</span>
+                            <span class="description">Get all muscle groups</span>
+                        </div>
+                        <div class="endpoint">
+                            <span class="method get">GET</span>
+                            <span class="path">/bodyparts</span>
+                            <span class="description">Get all body parts</span>
+                        </div>
+                        <div class="endpoint">
+                            <span class="method get">GET</span>
+                            <span class="path">/equipments</span>
+                            <span class="description">Get all equipment types</span>
+                        </div>
+                        <div class="endpoint">
+                            <span class="method get">GET</span>
+                            <span class="path">/stats</span>
+                            <span class="description">API statistics</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Examples Section -->
+    <section id="examples" class="examples">
+        <div class="container">
+            <h2>Code Examples</h2>
+            <div class="examples-tabs">
+                <div class="tab-buttons">
+                    <button class="tab-button active" data-tab="curl">cURL</button>
+                    <button class="tab-button" data-tab="javascript">JavaScript</button>
+                    <button class="tab-button" data-tab="python">Python</button>
+                    <button class="tab-button" data-tab="php">PHP</button>
+                </div>
+
+                <div class="tab-content active" id="curl">
+                    <div class="example">
+                        <h4>Get All Exercises</h4>
+                        <pre><code class="language-bash">curl "http://localhost:8000/exercises?page=1&limit=10"</code></pre>
+                    </div>
+                    <div class="example">
+                        <h4>Search Exercises</h4>
+                        <pre><code class="language-bash">curl "http://localhost:8000/exercises/search/push%20up"</code></pre>
+                    </div>
+                    <div class="example">
+                        <h4>Get Exercises by Muscle</h4>
+                        <pre><code class="language-bash">curl "http://localhost:8000/exercises/by-muscle/biceps"</code></pre>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="javascript">
+                    <div class="example">
+                        <h4>Fetch Exercises with JavaScript</h4>
+                        <pre><code class="language-javascript">// Get all exercises
+const response = await fetch('http://localhost:8000/exercises?limit=10');
+const data = await response.json();
+console.log(data.exercises);
+
+// Search exercises
+const searchResponse = await fetch('http://localhost:8000/exercises/search/squat');
+const searchData = await searchResponse.json();
+console.log(searchData);
+
+// Get exercises by muscle
+const muscleResponse = await fetch('http://localhost:8000/exercises/by-muscle/chest');
+const muscleData = await muscleResponse.json();
+console.log(muscleData);</code></pre>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="python">
+                    <div class="example">
+                        <h4>Python with Requests</h4>
+                        <pre><code class="language-python">import requests
+
+# Get all exercises
+response = requests.get('http://localhost:8000/exercises', params={'limit': 10})
+exercises = response.json()
+print(exercises['exercises'])
+
+# Search exercises
+search_response = requests.get('http://localhost:8000/exercises/search/deadlift')
+search_data = search_response.json()
+print(search_data)
+
+# Get exercises by equipment
+equipment_response = requests.get('http://localhost:8000/exercises/by-equipment/dumbbell')
+equipment_data = equipment_response.json()
+print(equipment_data)</code></pre>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="php">
+                    <div class="example">
+                        <h4>PHP with cURL</h4>
+                        <pre><code class="language-php"><?php
+// Get all exercises
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, 'http://localhost:8000/exercises?limit=10');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$response = curl_exec($ch);
+$exercises = json_decode($response, true);
+curl_close($ch);
+
+print_r($exercises['exercises']);
+
+// Search exercises
+$search_url = 'http://localhost:8000/exercises/search/bench%20press';
+$search_response = file_get_contents($search_url);
+$search_data = json_decode($search_response, true);
+print_r($search_data);
+?></code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- API Playground -->
+    <section id="playground" class="playground">
+        <div class="container">
+            <h2>API Playground</h2>
+            <p>Try our API endpoints directly from your browser</p>
+
+            <div class="playground-container">
+                <div class="playground-controls">
+                    <div class="control-group">
+                        <label for="api-base">API Base URL:</label>
+                        <input type="text" id="api-base" value="http://localhost:8000" placeholder="Enter your API URL">
+                    </div>
+
+                    <div class="control-group">
+                        <label for="endpoint-select">Select Endpoint:</label>
+                        <select id="endpoint-select">
+                            <option value="/exercises?limit=5">Get Exercises (limit 5)</option>
+                            <option value="/exercises/search/push">Search "push"</option>
+                            <option value="/exercises/by-muscle/biceps">Biceps Exercises</option>
+                            <option value="/exercises/by-bodypart/chest">Chest Exercises</option>
+                            <option value="/exercises/by-equipment/dumbbell">Dumbbell Exercises</option>
+                            <option value="/exercises/random?count=3">Random Exercises</option>
+                            <option value="/muscles">All Muscles</option>
+                            <option value="/bodyparts">All Body Parts</option>
+                            <option value="/equipments">All Equipment</option>
+                            <option value="/stats">API Statistics</option>
+                        </select>
+                    </div>
+
+                    <button id="try-api" class="btn btn-primary">
+                        <i class="fas fa-play"></i> Try API
+                    </button>
+                </div>
+
+                <div class="playground-result">
+                    <div class="result-header">
+                        <span>Response</span>
+                        <button id="copy-response" class="btn-copy">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                    </div>
+                    <pre id="api-response"><code class="language-json">Click "Try API" to see the response...</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Getting Started -->
+    <section class="getting-started">
+        <div class="container">
+            <h2>Getting Started</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Deploy the API</h3>
+                        <p>Use our Docker setup or deploy directly to your server</p>
+                        <code>./deploy.sh</code>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Make Your First Request</h3>
+                        <p>Test the API with a simple GET request</p>
+                        <code>curl https://your-api.com/exercises?limit=1</code>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Integrate & Build</h3>
+                        <p>Use the API in your fitness app, website, or platform</p>
+                        <code>fetch('https://your-api.com/exercises')</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-dumbbell"></i> Muscle Exercises API</h3>
+                    <p>Complete workout database for developers building fitness applications.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#overview">Overview</a></li>
+                        <li><a href="#endpoints">Endpoints</a></li>
+                        <li><a href="#examples">Examples</a></li>
+                        <li><a href="#playground">Playground</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Documentation</h4>
+                    <ul>
+                        <li><a href="/docs">API Docs</a></li>
+                        <li><a href="/redoc">ReDoc</a></li>
+                        <li><a href="https://github.com/your-repo">GitHub</a></li>
+                        <li><a href="#deployment">Deployment Guide</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="mailto:support@example.com">Contact</a></li>
+                        <li><a href="#issues">Report Issues</a></li>
+                        <li><a href="#contribute">Contribute</a></li>
+                        <li><a href="#license">License</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Muscle Exercises API. Built with FastAPI and ❤️</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
