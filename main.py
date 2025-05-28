@@ -43,8 +43,25 @@ async def general_exception_handler(request, exc):
 
 @app.get("/", tags=["Root"])
 async def root():
-    """Redirect to the website"""
-    return RedirectResponse(url="/website/index.html")
+    """API root endpoint - returns API information"""
+    return {
+        "message": "Muscle Exercises API is running!",
+        "version": "1.0.0",
+        "status": "healthy",
+        "total_exercises": len(data_loader.get_all_exercises()),
+        "total_muscles": len(data_loader.get_all_muscles()),
+        "total_body_parts": len(data_loader.get_all_body_parts()),
+        "total_equipments": len(data_loader.get_all_equipments()),
+        "documentation": "/docs",
+        "website": "/website/index.html",
+        "endpoints": {
+            "exercises": "/exercises",
+            "muscles": "/muscles",
+            "body_parts": "/bodyparts",
+            "equipments": "/equipments",
+            "stats": "/stats"
+        }
+    }
 
 
 @app.get("/api", tags=["Root"])

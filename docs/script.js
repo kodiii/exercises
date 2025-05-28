@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', function() {
             apiBaseInput.value = 'http://localhost:8000';
         } else if (currentHost === 'kodiii.github.io') {
             // GitHub Pages - point to EasyPanel deployment
-            apiBaseInput.value = 'https://muscle-exercises-api-[your-easypanel-id].easypanel.host';
+            apiBaseInput.value = 'https://exercisesapi-muscle-exercises-api.ii12lp.easypanel.host';
         } else {
             // Assume API is running on the same host but different port or path
             apiBaseInput.value = `${currentProtocol}//${currentHost}:8000`;
