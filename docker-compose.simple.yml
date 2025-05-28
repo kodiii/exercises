@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  muscle-exercises-api:
+    build: .
+    container_name: muscle-exercises-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./gifs:/app/gifs:ro  # Mount GIFs as read-only
+      - api_logs:/app/logs   # Persistent logs
+    environment:
+      - PYTHONUNBUFFERED=1
+      - ENVIRONMENT=production
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - api_network
+
+volumes:
+  api_logs:
+    driver: local
+
+networks:
+  api_network:
+    driver: bridge
