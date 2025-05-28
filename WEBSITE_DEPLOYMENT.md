@@ -9,7 +9,7 @@ This guide covers deploying your Muscle Exercises API website to showcase your A
 2. **Settings** → **Pages**
 3. **Source**: Deploy from a branch
 4. **Branch**: `main`
-5. **Folder**: `/website`
+5. **Folder**: `/docs`
 6. **Save**
 
 ### **Result:**
@@ -40,7 +40,7 @@ https://kodiii.github.io/exercises/
 3. **Connect GitHub** repository: `kodiii/exercises`
 4. **Build settings**:
    - Build command: (leave empty)
-   - Publish directory: `website`
+   - Publish directory: `docs`
 5. **Deploy**
 
 ### **Result:**
@@ -58,7 +58,7 @@ https://[random-name].netlify.app
 2. **Import Git Repository**
 3. **Select**: `kodiii/exercises`
 4. **Framework**: Other
-5. **Root Directory**: `website`
+5. **Root Directory**: `docs`
 6. **Deploy**
 
 ### **Result:**
@@ -80,7 +80,7 @@ If you want a dedicated repository for the website:
 
 ### **Files to Copy:**
 ```
-website/
+docs/
 ├── index.html
 ├── demo.html
 ├── styles.css
@@ -109,14 +109,14 @@ To connect your deployed website to your EasyPanel API:
 1. **Get your EasyPanel URL** from the dashboard
 2. **Update these files**:
 
-**In `website/script.js`** (line ~199):
+**In `docs/script.js`** (line ~199):
 ```javascript
 } else if (currentHost === 'kodiii.github.io') {
     // GitHub Pages - point to EasyPanel deployment
     apiBaseInput.value = 'https://your-actual-easypanel-url.easypanel.host';
 ```
 
-**In `website/demo.html`** (line ~148):
+**In `docs/demo.html`** (line ~148):
 ```javascript
 } else if (currentHost === 'kodiii.github.io') {
     // GitHub Pages - point to EasyPanel deployment
@@ -203,7 +203,7 @@ allow_origins=["https://kodiii.github.io", "https://yourdomain.com"]
 
 1. **Go to**: https://github.com/kodiii/exercises/settings/pages
 2. **Source**: Deploy from a branch
-3. **Branch**: main, **Folder**: /website
+3. **Branch**: main, **Folder**: /docs
 4. **Save**
 5. **Wait 2-3 minutes**
 6. **Visit**: https://kodiii.github.io/exercises/
@@ -215,7 +215,7 @@ allow_origins=["https://kodiii.github.io", "https://yourdomain.com"]
 ## 🔄 Updates
 
 **When you update your website:**
-1. **Edit files** in the `website/` directory
+1. **Edit files** in the `docs/` directory
 2. **Commit and push** to GitHub
 3. **GitHub Pages automatically rebuilds** (2-3 minutes)
 4. **Changes are live**

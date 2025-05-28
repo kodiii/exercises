@@ -30,7 +30,7 @@ app.add_middleware(
 app.mount("/gifs", StaticFiles(directory="gifs"), name="gifs")
 
 # Mount website static files
-app.mount("/website", StaticFiles(directory="website"), name="website")
+app.mount("/website", StaticFiles(directory="docs"), name="website")
 
 
 @app.exception_handler(Exception)

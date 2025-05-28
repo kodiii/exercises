@@ -50,7 +50,7 @@ services:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
       - ./gifs:/usr/share/nginx/html/gifs:ro
-      - ./website:/usr/share/nginx/html/website:ro
+      - ./docs:/usr/share/nginx/html/docs:ro
       - nginx_logs:/var/log/nginx
       - /etc/localtime:/etc/localtime:ro
       # Add SSL certificates here if using HTTPS
