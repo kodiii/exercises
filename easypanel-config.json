@@ -1,0 +1,47 @@
+{
+  "name": "muscle-exercises-api",
+  "description": "A comprehensive REST API for muscle exercises with 500+ workouts and interactive website",
+  "image": "custom",
+  "dockerfile": "Dockerfile",
+  "ports": [
+    {
+      "published": 8000,
+      "target": 8000,
+      "protocol": "tcp"
+    }
+  ],
+  "environment": [
+    {
+      "name": "PYTHONUNBUFFERED",
+      "value": "1"
+    },
+    {
+      "name": "ENVIRONMENT",
+      "value": "production"
+    },
+    {
+      "name": "PORT",
+      "value": "8000"
+    }
+  ],
+  "volumes": [
+    {
+      "type": "bind",
+      "source": "./gifs",
+      "target": "/app/gifs",
+      "readonly": true
+    }
+  ],
+  "healthcheck": {
+    "test": ["CMD", "curl", "-f", "http://localhost:8000/api"],
+    "interval": "30s",
+    "timeout": "10s",
+    "retries": 3,
+    "start_period": "40s"
+  },
+  "restart_policy": "unless-stopped",
+  "resources": {
+    "memory": "512m",
+    "cpu": "0.5"
+  }
+}
