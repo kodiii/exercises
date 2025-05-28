@@ -13,38 +13,38 @@
             min-height: 100vh;
             background: #f8fafc;
         }
-        
+
         .demo-container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
-        
+
         .demo-header {
             text-align: center;
             margin-bottom: 3rem;
         }
-        
+
         .demo-header h1 {
             font-size: 2.5rem;
             color: #1f2937;
             margin-bottom: 1rem;
         }
-        
+
         .demo-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2rem;
             margin-bottom: 3rem;
         }
-        
+
         .demo-card {
             background: white;
             border-radius: 12px;
             padding: 2rem;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
-        
+
         .demo-card h3 {
             color: #2563eb;
             margin-bottom: 1rem;
@@ -52,29 +52,29 @@
             align-items: center;
             gap: 10px;
         }
-        
+
         .exercise-card {
             border: 1px solid #e5e7eb;
             border-radius: 8px;
             padding: 1rem;
             margin-bottom: 1rem;
         }
-        
+
         .exercise-card:last-child {
             margin-bottom: 0;
         }
-        
+
         .exercise-name {
             font-weight: 600;
             color: #1f2937;
             margin-bottom: 0.5rem;
         }
-        
+
         .exercise-details {
             font-size: 0.9rem;
             color: #6b7280;
         }
-        
+
         .exercise-details span {
             display: inline-block;
             background: #f3f4f6;
@@ -82,7 +82,7 @@
             border-radius: 4px;
             margin: 2px;
         }
-        
+
         .back-link {
             display: inline-flex;
             align-items: center;
@@ -92,7 +92,7 @@
             font-weight: 600;
             margin-bottom: 2rem;
         }
-        
+
         .back-link:hover {
             color: #1d4ed8;
         }
@@ -105,28 +105,28 @@
                 <i class="fas fa-arrow-left"></i>
                 Back to Main Site
             </a>
-            
+
             <div class="demo-header">
                 <h1>Live API Demo</h1>
                 <p>Real data from the Muscle Exercises API</p>
             </div>
-            
+
             <div class="demo-grid">
                 <div class="demo-card">
                     <h3><i class="fas fa-dumbbell"></i> Sample Exercises</h3>
                     <div id="sample-exercises">Loading...</div>
                 </div>
-                
+
                 <div class="demo-card">
                     <h3><i class="fas fa-search"></i> Search Results</h3>
                     <div id="search-results">Loading...</div>
                 </div>
-                
+
                 <div class="demo-card">
                     <h3><i class="fas fa-list"></i> Muscle Groups</h3>
                     <div id="muscle-groups">Loading...</div>
                 </div>
-                
+
                 <div class="demo-card">
                     <h3><i class="fas fa-chart-bar"></i> API Statistics</h3>
                     <div id="api-stats">Loading...</div>
@@ -140,9 +140,12 @@
         const getApiUrl = () => {
             const currentHost = window.location.hostname;
             const currentProtocol = window.location.protocol;
-            
+
             if (currentHost === 'localhost' || currentHost === '127.0.0.1') {
                 return 'http://localhost:8000';
+            } else if (currentHost === 'kodiii.github.io') {
+                // GitHub Pages - point to EasyPanel deployment
+                return 'https://muscle-exercises-api-[your-easypanel-id].easypanel.host';
             } else {
                 return `${currentProtocol}//${currentHost}:8000`;
             }
@@ -155,7 +158,7 @@
             try {
                 const response = await fetch(`${API_BASE}/exercises?limit=3`);
                 const data = await response.json();
-                
+
                 const container = document.getElementById('sample-exercises');
                 container.innerHTML = data.exercises.map(exercise => `
                     <div class="exercise-card">
@@ -167,7 +170,7 @@
                     </div>
                 `).join('');
             } catch (error) {
-                document.getElementById('sample-exercises').innerHTML = 
+                document.getElementById('sample-exercises').innerHTML =
                     `<p style="color: #ef4444;">Error loading exercises: ${error.message}</p>`;
             }
         }
@@ -177,7 +180,7 @@
             try {
                 const response = await fetch(`${API_BASE}/exercises/search/curl`);
                 const data = await response.json();
-                
+
                 const container = document.getElementById('search-results');
                 container.innerHTML = data.slice(0, 3).map(exercise => `
                     <div class="exercise-card">
@@ -188,7 +191,7 @@
                     </div>
                 `).join('');
             } catch (error) {
-                document.getElementById('search-results').innerHTML = 
+                document.getElementById('search-results').innerHTML =
                     `<p style="color: #ef4444;">Error loading search results: ${error.message}</p>`;
             }
         }
@@ -198,7 +201,7 @@
             try {
                 const response = await fetch(`${API_BASE}/muscles`);
                 const data = await response.json();
-                
+
                 const container = document.getElementById('muscle-groups');
                 const muscles = data.slice(0, 10).map(muscle => `<span>${muscle.name}</span>`).join('');
                 container.innerHTML = `
@@ -206,7 +209,7 @@
                     <p style="color: #6b7280; font-size: 0.9rem;">Showing 10 of ${data.length} muscle groups</p>
                 `;
             } catch (error) {
-                document.getElementById('muscle-groups').innerHTML = 
+                document.getElementById('muscle-groups').innerHTML =
                     `<p style="color: #ef4444;">Error loading muscle groups: ${error.message}</p>`;
             }
         }
@@ -216,7 +219,7 @@
             try {
                 const response = await fetch(`${API_BASE}/stats`);
                 const data = await response.json();
-                
+
                 const container = document.getElementById('api-stats');
                 container.innerHTML = `
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
@@ -239,7 +242,7 @@
                     </div>
                 `;
             } catch (error) {
-                document.getElementById('api-stats').innerHTML = 
+                document.getElementById('api-stats').innerHTML =
                     `<p style="color: #ef4444;">Error loading statistics: ${error.message}</p>`;
             }
         }

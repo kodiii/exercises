@@ -2,14 +2,14 @@
 document.addEventListener('DOMContentLoaded', function() {
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
-    
+
     if (hamburger && navMenu) {
         hamburger.addEventListener('click', function() {
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
         });
     }
-    
+
     // Close mobile menu when clicking on a link
     document.querySelectorAll('.nav-menu a').forEach(link => {
         link.addEventListener('click', () => {
@@ -37,15 +37,15 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 document.addEventListener('DOMContentLoaded', function() {
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabContents = document.querySelectorAll('.tab-content');
-    
+
     tabButtons.forEach(button => {
         button.addEventListener('click', function() {
             const targetTab = this.getAttribute('data-tab');
-            
+
             // Remove active class from all buttons and contents
             tabButtons.forEach(btn => btn.classList.remove('active'));
             tabContents.forEach(content => content.classList.remove('active'));
-            
+
             // Add active class to clicked button and corresponding content
             this.classList.add('active');
             document.getElementById(targetTab).classList.add('active');
@@ -60,30 +60,30 @@ document.addEventListener('DOMContentLoaded', function() {
     const tryApiButton = document.getElementById('try-api');
     const apiResponse = document.getElementById('api-response');
     const copyButton = document.getElementById('copy-response');
-    
+
     if (tryApiButton) {
         tryApiButton.addEventListener('click', async function() {
             const baseUrl = apiBaseInput.value.trim();
             const endpoint = endpointSelect.value;
             const fullUrl = baseUrl + endpoint;
-            
+
             // Show loading state
             tryApiButton.innerHTML = '<div class="loading"></div> Loading...';
             tryApiButton.disabled = true;
-            
+
             try {
                 const response = await fetch(fullUrl);
                 const data = await response.json();
-                
+
                 // Format and display the response
                 const formattedJson = JSON.stringify(data, null, 2);
                 apiResponse.innerHTML = `<code class="language-json">${escapeHtml(formattedJson)}</code>`;
-                
+
                 // Re-highlight the code
                 if (window.Prism) {
                     Prism.highlightElement(apiResponse.querySelector('code'));
                 }
-                
+
             } catch (error) {
                 apiResponse.innerHTML = `<code class="language-json">{
   "error": "Failed to fetch data",
@@ -98,18 +98,18 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    
+
     // Copy response functionality
     if (copyButton) {
         copyButton.addEventListener('click', function() {
             const responseText = apiResponse.textContent;
-            
+
             navigator.clipboard.writeText(responseText).then(function() {
                 // Show success feedback
                 const originalText = copyButton.innerHTML;
                 copyButton.innerHTML = '<i class="fas fa-check"></i> Copied!';
                 copyButton.style.background = '#10b981';
-                
+
                 setTimeout(() => {
                     copyButton.innerHTML = originalText;
                     copyButton.style.background = '';
@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 textArea.select();
                 document.execCommand('copy');
                 document.body.removeChild(textArea);
-                
+
                 copyButton.innerHTML = '<i class="fas fa-check"></i> Copied!';
                 setTimeout(() => {
                     copyButton.innerHTML = '<i class="fas fa-copy"></i> Copy';
@@ -175,7 +175,7 @@ const observer = new IntersectionObserver(function(entries) {
 // Observe elements for animation
 document.addEventListener('DOMContentLoaded', function() {
     const animatedElements = document.querySelectorAll('.feature, .endpoint-category, .step');
-    
+
     animatedElements.forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(20px)';
@@ -191,9 +191,12 @@ document.addEventListener('DOMContentLoaded', function() {
         // Try to detect if we're running locally or on a server
         const currentHost = window.location.hostname;
         const currentProtocol = window.location.protocol;
-        
+
         if (currentHost === 'localhost' || currentHost === '127.0.0.1') {
             apiBaseInput.value = 'http://localhost:8000';
+        } else if (currentHost === 'kodiii.github.io') {
+            // GitHub Pages - point to EasyPanel deployment
+            apiBaseInput.value = 'https://muscle-exercises-api-[your-easypanel-id].easypanel.host';
         } else {
             // Assume API is running on the same host but different port or path
             apiBaseInput.value = `${currentProtocol}//${currentHost}:8000`;
@@ -208,7 +211,7 @@ document.querySelectorAll('.btn').forEach(button => {
         if (this.getAttribute('href') && this.getAttribute('href').startsWith('#')) {
             return;
         }
-        
+
         // Add subtle loading effect for external links
         if (this.getAttribute('href') && !this.getAttribute('href').startsWith('#')) {
             this.style.opacity = '0.7';
@@ -233,7 +236,7 @@ document.addEventListener('keydown', function(e) {
             }
         }
     }
-    
+
     // Escape key to close mobile menu
     if (e.key === 'Escape') {
         const hamburger = document.querySelector('.hamburger');
@@ -253,14 +256,14 @@ document.querySelectorAll('.btn, .tab-button').forEach(button => {
         const size = Math.max(rect.width, rect.height);
         const x = e.clientX - rect.left - size / 2;
         const y = e.clientY - rect.top - size / 2;
-        
+
         ripple.style.width = ripple.style.height = size + 'px';
         ripple.style.left = x + 'px';
         ripple.style.top = y + 'px';
         ripple.classList.add('ripple');
-        
+
         this.appendChild(ripple);
-        
+
         setTimeout(() => {
             ripple.remove();
         }, 600);
@@ -274,7 +277,7 @@ style.textContent = `
         position: relative;
         overflow: hidden;
     }
-    
+
     .ripple {
         position: absolute;
         border-radius: 50%;
@@ -283,7 +286,7 @@ style.textContent = `
         animation: ripple-animation 0.6s linear;
         pointer-events: none;
     }
-    
+
     @keyframes ripple-animation {
         to {
             transform: scale(4);

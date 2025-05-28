@@ -1,0 +1,44 @@
+# GitHub Pages configuration for Muscle Exercises API website
+title: "Muscle Exercises API"
+description: "A comprehensive REST API for muscle exercises with 500+ workouts, detailed instructions, and equipment information."
+baseurl: "/exercises"
+url: "https://kodiii.github.io"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+
+# Exclude files from processing
+exclude:
+  - README.md
+  - node_modules/
+  - vendor/
+
+# Include files
+include:
+  - _pages
+
+# Collections
+collections:
+  pages:
+    output: true
+    permalink: /:name/
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# SEO settings
+author: kodiii
+twitter:
+  username: kodiii
+social:
+  name: Muscle Exercises API
+  links:
+    - https://github.com/kodiii/exercises
+
+# Google Analytics (optional)
+# google_analytics: UA-XXXXXXXX-X
